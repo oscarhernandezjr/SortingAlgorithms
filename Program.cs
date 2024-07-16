@@ -1,4 +1,6 @@
-﻿namespace SortingAlgorithms
+﻿using System.Diagnostics;
+
+namespace SortingAlgorithms
 {
     public class Program
     {
@@ -6,14 +8,33 @@
         {
             int[] arr1 = { 90, 3, 2, 56, 32, 34, 65, 68, 76, 1, 0, 100, 8 };
             int[] arr2 = { 90, 3, 2, 56, 32, 34, 65, 68, 76, 1, 0, 100, 8 };
+            int[] arr3 = { 90, 3, 2, 56, 32, 34, 65, 68, 76, 1, 0, 100, 8 };
+            int[] arrSorted1 = { 0, 1, 2, 3, 8, 32, 34, 56, 65, 68, 76, 90, 100 };
+            int[] arrSorted2 = { 0, 1, 2, 3, 8, 32, 34, 56, 65, 68, 76, 90, 100 };
+            int[] arrSorted3 = { 0, 1, 2, 3, 8, 32, 34, 56, 65, 68, 76, 90, 100 };
 
-            PrintArray(arr1);
+
+            Stopwatch stopwatch = new Stopwatch();
+            stopwatch.Start();
             BubbleSort(arr1);
+            stopwatch.Stop();
             PrintArray(arr1);
+            Console.WriteLine("Elapsed time for BubbleSort: " + stopwatch.Elapsed);
+            Console.WriteLine();
 
-            PrintArray(arr2);
+            stopwatch.Restart();
             SelectionSort(arr2);
+            stopwatch.Stop();
             PrintArray(arr2);
+            Console.WriteLine("Elapsed time for SelectionSort: " + stopwatch.Elapsed);
+            Console.WriteLine();
+
+            stopwatch.Restart();
+            InsertionSort(arr3);
+            stopwatch.Stop();
+            PrintArray(arr3);
+            Console.WriteLine("Elapsed time for InsertionSort: " + stopwatch.Elapsed);
+            Console.WriteLine();
         }
         public static void PrintArray(int[] arr)
         {
@@ -24,9 +45,6 @@
             Console.WriteLine();
         }
 
-
-        public static void InstertinSort(int[] arr)
-
         public static int BubbleSort(int[] arrToSort) //good if low on system memory 
         {
             int totalOuterIterations = 0;
@@ -34,7 +52,7 @@
             // Overall O(n^2) runtime
             // Big Omega - O(n^2)
 
-            for (int i = 0; i < arrToSort.Length; i++) //how many times through unsorted elements O(n)
+            for (int i = 0; i < arrToSort.Length; i++) 
             {
                 ++totalOuterIterations;
                 int swaps = 0;
@@ -80,6 +98,27 @@
                     arrToSort[i] = arrToSort[minIndex];
                     arrToSort[minIndex] = temp;
                 }
+            }
+
+        }
+
+        public static void InsertionSort(int[] arrToSort)
+        {
+
+            for (int i = 1; i < arrToSort.Length; i++)
+            {
+                int temp = arrToSort[i];  // store element as it might be overwritten
+                int priorIndex = i - 1;  //start comparing with element before the current element
+
+                // if prior element is greater than stored element
+                // and we have not reached the end of the array
+                while (priorIndex >= 0 && arrToSort[priorIndex] > temp)
+                {
+                    arrToSort[priorIndex + 1] = arrToSort[priorIndex];
+                    priorIndex--;
+                }
+
+                arrToSort[priorIndex + 1] = temp; // sets prior index to saved variable
             }
         }
     }
