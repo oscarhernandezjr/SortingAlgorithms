@@ -2,6 +2,8 @@
 
 namespace SortingAlgorithms
 {
+
+
     public class Program
     {
         static void Main(string[] args)
@@ -35,15 +37,84 @@ namespace SortingAlgorithms
             PrintArray(arr3);
             Console.WriteLine("Elapsed time for InsertionSort: " + stopwatch.Elapsed);
             Console.WriteLine();
-        }
-        public static void PrintArray(int[] arr)
-        {
-            foreach (int i in arr)
+
+            Console.WriteLine("Please select a sorting algorithm");
+            Console.WriteLine("1: Bubble Sort");
+            Console.WriteLine("2: Selection Sort");
+            Console.WriteLine("3: Insertion Sort");
+
+            string? userSelection = Console.ReadLine();
+
+            Student student1 = new Student("Melissa", 4.0);
+            Student student2 = new Student("Rich", 3.0);
+            Student student3 = new Student("Adam", 3.8);
+
+            Student[] students = { student1, student2, student3 };
+
+
+            switch (userSelection)
             {
-                Console.Write(i + " ");
+                case "1":
+                    BubbleSort(students);
+                    // Call bubble sort method
+                    break;
+                case "2":
+
+                    // Call selection sort method
+                    break;
+                case "3":
+                    // Call insertion sort method
+                    break;
+                default:
+                    break;
             }
-            Console.WriteLine();
+            PrintArray(students);
+
+            int[] mergeArray = { 0, 1, 2, 3, 8, 32, 34, 56, 65, 68, 76, 90, 100 };
+            MergeSort(mergeArray);
         }
+
+
+
+        // Responsible for splitting the array up and eventually merging it together
+        // Calls itself recursively
+        public static void MergeSort(int[] arr)
+        {
+            if (arr.Length <= 1) return; // example of an early return
+
+            int mid = arr.Length / 2;
+            int[] leftSubArray = new int[mid];
+            int[] rightSubArray = new int[arr.Length - mid];
+
+            for(int i = 0; i < mid; i ++)
+            {
+                leftSubArray[i] = arr[i];
+            }
+
+            for(int i = mid; i < arr.Length; i++)
+            {
+                rightSubArray[i- mid] = arr[i];
+            }
+
+            MergeSort(leftSubArray);
+            MergeSort(rightSubArray);
+        }
+
+        public static void PrintArray(Student[] arr)
+        {
+
+            foreach (var item in arr)
+
+            {
+
+                Console.Write($"{item.name}: {item.gpa}");
+
+            }
+
+            Console.WriteLine();
+
+        }
+
 
         public static int BubbleSort(int[] arrToSort) //good if low on system memory 
         {
@@ -52,7 +123,7 @@ namespace SortingAlgorithms
             // Overall O(n^2) runtime
             // Big Omega - O(n^2)
 
-            for (int i = 0; i < arrToSort.Length; i++) 
+            for (int i = 0; i < arrToSort.Length; i++)
             {
                 ++totalOuterIterations;
                 int swaps = 0;
@@ -121,5 +192,46 @@ namespace SortingAlgorithms
                 arrToSort[priorIndex + 1] = temp; // sets prior index to saved variable
             }
         }
+
+        public static void BubbleSort(Student[] arrToSort)
+        {
+
+            Student temp;
+
+
+            for (int i = 0; i < arrToSort.Length; i++)
+            {
+                for (int j = 0; j < arrToSort.Length - 1 - i; j++)
+
+                {
+                    // we need to swap
+                    if (arrToSort[j].gpa > arrToSort[j + 1].gpa)
+                    {
+
+                        temp = arrToSort[j];
+                        arrToSort[j] = arrToSort[j + 1];
+                        arrToSort[j + 1] = temp;
+                    }
+                }
+
+            }
+
+        }
+        public static void PrintArray(int[] arr)
+        {
+
+            foreach (var item in arr)
+
+            {
+
+                Console.Write($"{item}");
+
+            }
+
+            Console.WriteLine();
+
+        }
+
+
     }
 }
